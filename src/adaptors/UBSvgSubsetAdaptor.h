@@ -48,6 +48,7 @@ class UBGraphicsAppleWidgetItem;
 class UBGraphicsW3CWidgetItem;
 class UBGraphicsTextItem;
 class UBGraphicsCurtainItem;
+class UBGraphicsGeoTriangle;
 class UBGraphicsRuler;
 class UBGraphicsCompass;
 class UBGraphicsProtractor;
@@ -142,6 +143,8 @@ class UBSvgSubsetAdaptor
 
                 UBGraphicsCurtainItem* curtainItemFromSvg();
 
+                UBGraphicsGeoTriangle* geotriangleFromSvg();
+                
                 UBGraphicsRuler* rulerFromSvg();
 
                 UBGraphicsCompass* compassFromSvg();
@@ -246,6 +249,7 @@ class UBSvgSubsetAdaptor
                 void graphicsWidgetToSvg(UBGraphicsWidgetItem *item);
                 void textItemToSvg(UBGraphicsTextItem *item);
                 void curtainItemToSvg(UBGraphicsCurtainItem *item);
+                void geotriangleToSvg(UBGraphicsGeoTriangle *item);
                 void rulerToSvg(UBGraphicsRuler *item);
                 void compassToSvg(UBGraphicsCompass *item);
                 void protractorToSvg(UBGraphicsProtractor *item);

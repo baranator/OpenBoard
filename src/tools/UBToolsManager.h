@@ -82,7 +82,8 @@ class UBToolsManager : public QObject
 
             return UBToolDescriptor();
         }
-
+        
+        UBToolDescriptor geotriangle;
         UBToolDescriptor ruler;
         UBToolDescriptor protractor;
         UBToolDescriptor compass;

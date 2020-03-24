@@ -48,6 +48,7 @@ class UBGraphicsAppleWidgetItem;
 class UBToolWidget;
 class UBGraphicsPDFItem;
 class UBGraphicsTextItem;
+class UBGraphicsGeoTriangle;
 class UBGraphicsRuler;
 class UBGraphicsProtractor;
 class UBGraphicsCompass;
@@ -235,6 +236,7 @@ class UBGraphicsScene: public UBCoreGraphicsScene, public UBItem
             return (mBackgroundObject != 0);
         }
 
+        void addGeoTriangle(QPointF center);
         void addRuler(QPointF center);
         void addProtractor(QPointF center);
         void addCompass(QPointF center);

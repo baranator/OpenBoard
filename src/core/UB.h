@@ -157,6 +157,7 @@ struct UBGraphicsItemType
         PDFItemType,
         TextItemType,
         CurtainItemType,
+        GeoTriangleItemType,
         RulerItemType,
         CompassItemType,
         ProtractorItemType,

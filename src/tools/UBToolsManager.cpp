@@ -60,6 +60,13 @@ UBToolsManager::UBToolsManager(QObject *parent)
     mDescriptors << mask;
 
 
+    geotriangle.id = "openboardtool://geotriangle";
+    geotriangle.icon = QPixmap(":/images/toolPalette/rulerTool.png");
+    geotriangle.label = tr("Geotriangle");
+    geotriangle.version = "1.0";
+    mToolsIcon.insert(geotriangle.id, ":/images/toolPalette/rulerTool.png");
+    mDescriptors << geotriangle;
+    
     ruler.id = "openboardtool://ruler";
     ruler.icon = QPixmap(":/images/toolPalette/rulerTool.png");
     ruler.label = tr("Ruler");

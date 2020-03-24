@@ -1428,6 +1428,11 @@ UBItem *UBBoardController::downloadFinished(bool pSuccess, QUrl sourceUrl, QUrl 
             mActiveScene->addCompass(pPos);
             UBDrawingController::drawingController()->setStylusTool(UBStylusTool::Selector);
         }
+        else if (sourceUrl.toString() == UBToolsManager::manager()->geotriangle.id)
+        {
+            mActiveScene->addGeoTriangle(pPos);
+            UBDrawingController::drawingController()->setStylusTool(UBStylusTool::Selector);
+        }
         else if (sourceUrl.toString() == UBToolsManager::manager()->ruler.id)
         {
             mActiveScene->addRuler(pPos);

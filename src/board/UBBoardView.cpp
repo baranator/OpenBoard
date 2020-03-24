@@ -76,6 +76,7 @@
 
 #include "document/UBDocumentProxy.h"
 
+#include "tools/UBGraphicsGeoTriangle.h"
 #include "tools/UBGraphicsRuler.h"
 #include "tools/UBGraphicsCurtainItem.h"
 #include "tools/UBGraphicsCompass.h"
@@ -534,6 +535,7 @@ Here we determines cases when items should to get mouse press event at pressing 
     switch(item->type())
     {
     case UBGraphicsProtractor::Type:
+    case UBGraphicsGeoTriangle::Type:
     case UBGraphicsRuler::Type:
     case UBGraphicsTriangle::Type:
     case UBGraphicsCompass::Type:

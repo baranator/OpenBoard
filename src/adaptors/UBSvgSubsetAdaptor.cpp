@@ -50,6 +50,7 @@
 #include "domain/UBGraphicsGroupContainerItemDelegate.h"
 #include "domain/UBItem.h"
 
+#include "tools/UBGraphicsGeoTriangle.h"
 #include "tools/UBGraphicsRuler.h"
 #include "tools/UBGraphicsCompass.h"
 #include "tools/UBGraphicsProtractor.h"
@@ -744,6 +745,17 @@ UBGraphicsScene* UBSvgSubsetAdaptor::UBSvgSubsetReader::loadScene(UBDocumentProx
                     mScene->registerTool(mask);
                 }
             }
+            else if (mXmlReader.name() == "geotriangle")
+            {
+
+                UBGraphicsGeoTriangle *geotriangle = geotriangleFromSvg();
+                if (geotriangle)
+                {
+                    mScene->addItem(geotriangle);
+                    mScene->registerTool(geotriangle);
+                }
+
+            }
             else if (mXmlReader.name() == "ruler")
             {
 
@@ -1345,6 +1357,14 @@ bool UBSvgSubsetAdaptor::UBSvgSubsetWriter::persistScene(UBDocumentProxy* proxy,
             continue;
         }
 
+        // Is the item a geotriangle?
+        UBGraphicsGeoTriangle *geotriangle = qgraphicsitem_cast<UBGraphicsGeoTriangle*> (item);
+        if (geotriangle && geotriangle->isVisible())
+        {
+            geotriangleToSvg(geotriangle);
+            continue;
+        }
+        
         // Is the item a ruler?
         UBGraphicsRuler *ruler = qgraphicsitem_cast<UBGraphicsRuler*> (item);
         if (ruler && ruler->isVisible())
@@ -2826,6 +2846,62 @@ UBGraphicsCurtainItem* UBSvgSubsetAdaptor::UBSvgSubsetReader::curtainItemFromSvg
     return curtainItem;
 }
 
+
+void UBSvgSubsetAdaptor::UBSvgSubsetWriter::geotriangleToSvg(UBGraphicsGeoTriangle* item)
+{
+
+    /**
+     *
+     * sample
+     *
+      <ub:geotriangle x="250" y="150" width="122" height="67"...>
+      </ub:geotriangle>
+     */
+
+    mXmlWriter.writeStartElement(UBSettings::uniboardDocumentNamespaceUri, "geotriangle");
+    mXmlWriter.writeAttribute("x", QString("%1").arg(item->boundingRect().x()));
+    mXmlWriter.writeAttribute("y", QString("%1").arg(item->boundingRect().y()));
+    mXmlWriter.writeAttribute("width", QString("%1").arg(item->boundingRect().width()));
+    mXmlWriter.writeAttribute("height", QString("%1").arg(item->boundingRect().height()));
+    mXmlWriter.writeAttribute("transform", toSvgTransform(item->sceneMatrix()));
+
+    QString zs;
+    zs.setNum(item->zValue(), 'f'); // 'f' keeps precision
+    mXmlWriter.writeAttribute(UBSettings::uniboardDocumentNamespaceUri, "z-value", zs);
+
+    UBItem* ubItem = dynamic_cast<UBItem*>(item);
+
+    if (ubItem)
+    {
+        mXmlWriter.writeAttribute(UBSettings::uniboardDocumentNamespaceUri, "uuid", UBStringUtils::toCanonicalUuid(ubItem->uuid()));
+    }
+
+    mXmlWriter.writeEndElement();
+}
+
+
+UBGraphicsGeoTriangle* UBSvgSubsetAdaptor::UBSvgSubsetReader::geotriangleFromSvg()
+{
+    UBGraphicsGeoTriangle* geotriangle = new UBGraphicsGeoTriangle();
+
+    graphicsItemFromSvg(geotriangle);
+
+    geotriangle->setData(UBGraphicsItemData::ItemLayerType, QVariant(UBItemLayerType::Tool));
+
+    QStringRef svgWidth = mXmlReader.attributes().value("width");
+    QStringRef svgHeight = mXmlReader.attributes().value("height");
+    QStringRef svgX = mXmlReader.attributes().value("x");
+    QStringRef svgY = mXmlReader.attributes().value("y");
+
+    if (!svgWidth.isNull() && !svgHeight.isNull() && !svgX.isNull() && !svgY.isNull())
+    {
+        geotriangle->setRect(svgX.toString().toFloat(), svgY.toString().toFloat(),  svgWidth.toString().toFloat(), svgHeight.toString().toFloat());
+    }
+
+    geotriangle->setVisible(true);
+
+    return geotriangle;
+}
 
 void UBSvgSubsetAdaptor::UBSvgSubsetWriter::rulerToSvg(UBGraphicsRuler* item)
 {

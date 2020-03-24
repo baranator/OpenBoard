@@ -50,6 +50,7 @@
 #include "gui/UBToolWidget.h"
 #include "gui/UBResources.h"
 
+#include "tools/UBGraphicsGeoTriangle.h"
 #include "tools/UBGraphicsRuler.h"
 #include "tools/UBGraphicsProtractor.h"
 #include "tools/UBGraphicsCompass.h"
@@ -2171,6 +2172,21 @@ QGraphicsItem* UBGraphicsScene::scaleToFitDocumentSize(QGraphicsItem* item, bool
     }
 
     return item;
+}
+
+
+void UBGraphicsScene::addGeoTriangle(QPointF center)
+{
+    UBGraphicsGeoTriangle* geotriangle = new UBGraphicsGeoTriangle(); // mem : owned and destroyed by the scene
+    mTools << geotriangle;
+    QRectF rect = geotriangle->rect();
+    geotriangle->setRect(center.x() - rect.width()/2, center.y() - rect.height()/2, rect.width(), rect.height());
+
+    geotriangle->setData(UBGraphicsItemData::ItemLayerType, QVariant(UBItemLayerType::Tool));
+
+    addItem(geotriangle);
+
+    geotriangle->setVisible(true);
 }
 
 void UBGraphicsScene::addRuler(QPointF center)

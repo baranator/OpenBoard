@@ -1,4 +1,5 @@
-HEADERS     +=  src/tools/UBGraphicsRuler.h \
+HEADERS     +=  src/tools/UBGraphicsGeoTriangle.h \
+                src/tools/UBGraphicsRuler.h \
                 src/tools/UBGraphicsTriangle.h \
                 src/tools/UBGraphicsProtractor.h \
                 src/tools/UBGraphicsCompass.h \
@@ -8,7 +9,8 @@ HEADERS     +=  src/tools/UBGraphicsRuler.h \
                 src/tools/UBAbstractDrawRuler.h \
                 src/tools/UBGraphicsCache.h
 
-SOURCES     +=  src/tools/UBGraphicsRuler.cpp \
+SOURCES     +=  src/tools/UBGraphicsGeoTriangle.cpp \
+                src/tools/UBGraphicsRuler.cpp \
                 src/tools/UBGraphicsTriangle.cpp \
                 src/tools/UBGraphicsProtractor.cpp \
                 src/tools/UBGraphicsCompass.cpp \
